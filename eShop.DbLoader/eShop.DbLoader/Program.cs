@@ -8,7 +8,10 @@ namespace eShop.DbLoader
 {
     class Program
     {
+        /// <summary>指定要建立的 Task 數量</summary>
         static int taskNumber = 50;
+
+        /// <summary>系統分鐘數超過此數值時開始執行所有建立的 Task 內容</summary>
         static int executeMinute = 4;
 
         static void Main(string[] args)
@@ -16,7 +19,6 @@ namespace eShop.DbLoader
             List<Task> _tasks;
 
             _tasks = new List<Task>();
-
 
             for (int i = 0; i < taskNumber; i++)
                 _tasks.Add(new Task(AddOrder));
@@ -91,7 +93,9 @@ namespace eShop.DbLoader
                 }
                 else
                 {
+                    //商品已無庫存，離開 while
                     _stopwatch.Stop();
+
                     Console.WriteLine("{0} finish\t{1} ms"
                                     , _guid
                                     , _stopwatch.ElapsedMilliseconds);
