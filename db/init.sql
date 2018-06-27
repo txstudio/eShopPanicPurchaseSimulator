@@ -18,8 +18,20 @@ GO
 DROP DATABASE [eShop]
 GO
 */
+/*
+--重設資料內容指令碼
 
+--設定商品庫存量
+UPDATE [Products].[ProductStorages]
+	SET [Storage] = 100
+WHERE [ProductNo] = 1
+GO
 
+--移除訂單資訊
+DELETE FROM [Orders].[OrderDetails]
+DELETE FROM [Orders].[OrderMains]
+GO
+*/
 CREATE DATABASE [eShop]
 GO
 
