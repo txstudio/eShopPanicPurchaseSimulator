@@ -22,6 +22,29 @@ namespace eShop.DbLoader
             this._connectionString = _builder.ConnectionString;
         }
 
+        /// <summary>
+        /// 重設指定的訂單資料表內容
+        /// </summary>
+        public void ResetOrderTable()
+        {
+            using (SqlConnection _conn
+                = new SqlConnection(this._connectionString))
+            {
+                SqlCommand _cmd;
+
+                _cmd = new SqlCommand();
+                _cmd.Connection = _conn;
+
+                _cmd.CommandText
+                    = @"DELETE FROM [Orders].[OrderDetails]
+                        DELETE FROM [Orders].[OrderMains]";
+
+                _conn.Open();
+                var _result = _cmd.ExecuteNonQuery();
+                _conn.Close();
+            }
+        }
+
         public int GetStorageBySchema(string schema)
         {
             using (SqlConnection _conn
