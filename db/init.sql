@@ -230,7 +230,7 @@ AS
 	--超賣 - 速度快
 	--SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
 
-	--超賣 - 序號會亂跳
+	--超賣 - 序號會亂跳 / 訂單編號順序正確
     --SET TRANSACTION ISOLATION LEVEL READ COMMITTED
 	
 	--超賣 - 序號與訂單編號會錯亂
