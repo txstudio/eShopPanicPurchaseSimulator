@@ -239,7 +239,7 @@ AS
 	--用這個需額外設定 / 86xx ms
 	--SET TRANSACTION ISOLATION LEVEL SNAPSHOT
     
-	--不會超賣，但是速度很慢 / 1451xx ms
+	--不會超賣 - 序號會亂跳 / 訂單編號順序正確 / 但是速度超慢
 	--SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
 	
 	BEGIN TRY
