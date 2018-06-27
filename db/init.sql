@@ -1,5 +1,25 @@
 --docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Pa$$w0rd' -p 1433:1433 -d --name eshop-mssql-srv microsoft/mssql-server-linux
 
+/*
+--將既有 eShop 資料庫移除的指令碼
+EXEC msdb.dbo.sp_delete_database_backuphistory @database_name = N'eShop'
+
+GO
+USE [master]
+GO
+
+ALTER DATABASE [eShop]
+	SET SINGLE_USER WITH ROLLBACK IMMEDIATE
+GO
+
+USE [master]
+GO
+
+DROP DATABASE [eShop]
+GO
+*/
+
+
 CREATE DATABASE [eShop]
 GO
 
