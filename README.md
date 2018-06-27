@@ -10,6 +10,11 @@
 
 資料夾中會準備建立範例資料庫使用的 Transact-SQL 指令碼
 
+資料庫使用由 Docker Image 建立的 Microsoft SQL Server in Linux 資料庫，建立之指令碼如下
+```
+docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Pa$$w0rd' -p 1433:1433 -d --name eshop-mssql-srv microsoft/mssql-server-linux
+```
+
 ### 資料庫說明
 
 |資料庫物件|類型|說明|
