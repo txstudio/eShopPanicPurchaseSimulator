@@ -227,7 +227,7 @@ AS
 	--超賣 / 5xxx ms
 	--不指定 ISOLATION LEVEL
 
-	--超賣 - 速度快
+	--超賣 - 序號與訂單編號正確 / 速度最快 / 有機會超賣
 	--SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
 
 	--超賣 - 序號會亂跳 / 訂單編號順序正確
