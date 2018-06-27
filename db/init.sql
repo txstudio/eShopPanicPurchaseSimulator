@@ -102,12 +102,18 @@ BEGIN
 	DECLARE @NewCode CHAR(8)
 	DECLARE @Identity INT
 
+	-- SET @Schema = (
+		-- SELECT TOP(1) [Schema] FROM [Orders].[OrderMains]
+		-- ORDER BY [No] DESC
+	-- )
 	SET @Schema = (
 		SELECT TOP(1) [Schema] FROM [Orders].[OrderMains]
-		ORDER BY [No] DESC
+		ORDER BY [Schema] DESC
 	)
 
 	SET @NewCode = CONVERT(VARCHAR,GETDATE(),112)
+	SET @LastCode = LEFT(@Schema,8)
+	SET @LastIdentity = RIGHT(@Schema,7)
 
 	SET @Identity = 0
 
@@ -156,7 +162,7 @@ BEGIN
 	)
 	
 	SET @OrderStorage = (
-		SELECT [Quantity] FROM [Orders].[OrderDetails]
+		SELECT SUM([Quantity]) FROM [Orders].[OrderDetails]
 		WHERE [ProductNo] = @ProductNo
 	)
 	
@@ -186,7 +192,23 @@ CREATE PROCEDURE [Orders].[AddOrder]
 	@IsSuccess		BIT OUT
 AS
 
-	SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+	--會超賣 / 5xxx ms
+	--不指定 ISOLATION LEVEL
+
+	--不會超賣 / 23xx ms /有人搶不到/
+	--SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
+
+	--超賣
+    --SET TRANSACTION ISOLATION LEVEL READ COMMITTED
+	
+	--超賣
+    --SET TRANSACTION ISOLATION LEVEL REPEATABLE READ
+    
+	--用這個需額外設定 / 86xx ms
+	--SET TRANSACTION ISOLATION LEVEL SNAPSHOT
+    
+	--不會超賣，但是速度很慢 / 1451xx ms
+	--SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
 	
 	BEGIN TRY
 		BEGIN TRANSACTION
@@ -194,7 +216,24 @@ AS
 		DECLARE @OrderNo INT
 		DECLARE @Schame CHAR(15)
 		
-		SET @IsSuccess = 1				
+		SET @IsSuccess = 1	
+		
+		--若有商品庫存量小於購買數量
+		--	取消此筆交易
+		IF NOT EXISTS( 
+			SELECT b.[No]
+			FROM @Items a
+				INNER JOIN [Products].[ProductMains] b ON a.[ProductNo] = b.[No]
+			WHERE (
+				SELECT [Products].[GetProductValidStorage](b.[Schema])
+				) >= a.[Quantity]
+			)
+		BEGIN
+			ROLLBACK
+		
+			RETURN
+		END
+					
 		SET @OrderNo = NEXT VALUE FOR [Orders].[OrderMainSeq]		
 		SET @Schame = (
 			SELECT [Orders].[GetOrderSchema]()
