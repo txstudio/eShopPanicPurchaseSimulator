@@ -95,7 +95,7 @@ namespace eShop.DbLoader
 
                 _currentMinute = DateTime.Now.Minute;
 
-                //直到達到指定分鐘後開始執行
+                //直到達到指定分鐘後開始執行 - 這段程式碼不嚴謹
                 if (executeMinute < _currentMinute)
                 {
                     if (_execute == false)
