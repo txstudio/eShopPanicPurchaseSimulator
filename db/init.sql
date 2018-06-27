@@ -224,10 +224,10 @@ CREATE PROCEDURE [Orders].[AddOrder]
 	@IsSuccess		BIT OUT
 AS
 
-	--會超賣 / 5xxx ms
+	--超賣 / 5xxx ms
 	--不指定 ISOLATION LEVEL
 
-	--不會超賣 / 23xx ms /有人搶不到/
+	--超賣 - 速度快
 	--SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
 
 	--超賣
