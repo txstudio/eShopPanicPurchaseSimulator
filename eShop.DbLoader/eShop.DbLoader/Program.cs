@@ -23,6 +23,13 @@ namespace eShop.DbLoader
 
             SetArgs(args);
 
+
+            eShopRepository _eShopRepository;
+
+            _eShopRepository = new eShopRepository();
+            _eShopRepository.ResetOrderTable();
+
+
             for (int i = 0; i < taskNumber; i++)
                 _tasks.Add(new Task(AddOrder));
 
