@@ -236,7 +236,7 @@ AS
 	--超賣 - 序號與訂單編號會錯亂
     --SET TRANSACTION ISOLATION LEVEL REPEATABLE READ
     
-	--用這個需額外設定 / 86xx ms
+	--不會超賣 - 序號會亂跳 / 訂單編號順序正確 - 用這個需額外設定 
 	--SET TRANSACTION ISOLATION LEVEL SNAPSHOT
     
 	--不會超賣 - 序號會亂跳 / 訂單編號順序正確 / 但是速度超慢
