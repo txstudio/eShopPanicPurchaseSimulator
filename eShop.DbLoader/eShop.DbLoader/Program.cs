@@ -14,6 +14,7 @@ namespace eShop.DbLoader
         /// <summary>系統分鐘數超過此數值時開始執行所有建立的 Task 內容</summary>
         static int executeMinute = 4;
 
+        //dotnet eShop.DbLoader.dll -task 100 -minute 55
         static void Main(string[] args)
         {
             List<Task> _tasks;
