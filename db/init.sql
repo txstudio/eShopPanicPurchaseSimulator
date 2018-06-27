@@ -233,7 +233,7 @@ AS
 	--超賣 - 序號會亂跳
     --SET TRANSACTION ISOLATION LEVEL READ COMMITTED
 	
-	--超賣
+	--超賣 - 序號與訂單編號會錯亂
     --SET TRANSACTION ISOLATION LEVEL REPEATABLE READ
     
 	--用這個需額外設定 / 86xx ms
