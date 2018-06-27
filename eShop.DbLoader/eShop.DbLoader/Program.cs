@@ -20,14 +20,42 @@ namespace eShop.DbLoader
 
             _tasks = new List<Task>();
 
+            SetArgs(args);
+
             for (int i = 0; i < taskNumber; i++)
                 _tasks.Add(new Task(AddOrder));
 
             for (int i = 0; i < _tasks.Count; i++)
                 _tasks[i].Start();
-
-
+            
             Console.ReadKey();
+        }
+
+        static void SetArgs(string[] args)
+        {
+            var _arg = string.Empty;
+            var _index = 0;
+
+            for (int i = 0; i < args.Length; i++)
+            {
+                _arg = args[i];
+                _index = i + 1;
+
+                if(_index <= args.Length)
+                {
+                    switch (_arg)
+                    {
+                        case "-task":
+                            taskNumber = Convert.ToInt32(args[_index]);
+                            break;
+                        case "-minute":
+                            executeMinute = Convert.ToInt32(args[_index]);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
         }
 
         static void AddOrder()
