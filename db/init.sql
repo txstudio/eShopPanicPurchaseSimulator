@@ -247,19 +247,29 @@ AS
 		
 		DECLARE @OrderNo INT
 		DECLARE @Schame CHAR(15)
+		DECLARE @output TABLE (
+			[ProductNo]		INT PRIMARY KEY,
+			[AfterStorage]	SMALLINT
+		)
 		
 		SET @IsSuccess = 1	
 		
+		--直接更新指定商品庫存
+		UPDATE [Products].[ProductStorages]
+			SET [Storage] = ([Storage] - [Quantity])
+		OUTPUT deleted.[ProductNo]
+			,inserted.[Storage]
+		INTO @output
+			FROM [Products].[ProductStorages] a 
+				INNER JOIN @tables b ON a.[ProductNo] = b.[ProductNo]
+		
 		--若有商品庫存量小於購買數量
 		--	取消此筆交易
-		IF NOT EXISTS( 
-			SELECT b.[No]
-			FROM @Items a
-				INNER JOIN [Products].[ProductMains] b ON a.[ProductNo] = b.[No]
-			WHERE (
-				SELECT [Products].[GetProductValidStorage](b.[Schema])
-				) >= a.[Quantity]
-			)
+		IF EXISTS(
+			SELECT [ProductNo] 
+			FROM @output 
+			WHERE [AfterStorage] < 0
+		)
 		BEGIN
 			ROLLBACK
 		
