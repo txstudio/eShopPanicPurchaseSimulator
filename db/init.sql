@@ -193,12 +193,7 @@ BEGIN
 		WHERE [ProductNo] = @ProductNo
 	)
 	
-	SET @OrderStorage = (
-		SELECT SUM([Quantity]) FROM [Orders].[OrderDetails]
-		WHERE [ProductNo] = @ProductNo
-	)
-	
-	SET @Storage = ISNULL(@ProductStorage,0) - ISNULL(@OrderStorage,0)
+	SET @Storage = ISNULL(@ProductStorage,0)
 	
 	IF @Storage > 0
 	BEGIN
