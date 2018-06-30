@@ -256,7 +256,7 @@ AS
 			,inserted.[Storage]
 		INTO @output
 			FROM [Products].[ProductStorages] a 
-				INNER JOIN @tables b ON a.[ProductNo] = b.[ProductNo]
+				INNER JOIN @Items b ON a.[ProductNo] = b.[ProductNo]
 		
 		--若有商品庫存量小於購買數量
 		--	取消此筆交易
